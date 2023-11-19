@@ -18,7 +18,7 @@
 * [NPM](https://www.npmjs.com/)
 
 ## Course
-Thanks for taking the [Introduction to Node.js course](https://frontendmasters.com/courses/node-js/) -- the course has two parts: slides and exercises. The slides describe the exercises in detail. Each exercise have a folder.
+Taken  [Node.js: The Complete Guide to Build RESTful APIs ](https://www.udemy.com/course/nodejs-master-class/) course by Mosh Hamedani .
 
 ## Exercises
 
@@ -36,35 +36,17 @@ Important: After installing node, please run `npm install i` or `npm install` to
 * commands
   * test - `npx jest`
 
-This exercise will have you convert some JavaScript written for the browser, so that it works with node.
-- [ ] checkout to start branch
-- [ ] check the README on how to run test (will talk later about that command)
-- [ ] fix and convert the 3 js files in the exercises/modules/browser to Nodejs JavaScript and place them in exercises/modules/node
-- [ ] ensure all tests pass by running test command again
 ### CLI (npm)
 * location - `exercises/cli`
 * commands
   * new - `node exercises/cli/index.js new`
   * list - `node exercises/cli/index.js list`
 
-You'll be creating a CLI program that saves and retrieves contacts from and address book. The program is partially there, however, you must install some remote modules, and use the fileSystem to get some things to work.
-
-- [ ] install all remote modules (hint: use npm)
-- [ ] check the README on how to run your CLI
-- [ ] Fix the CLI so that the "new" command works by saving contacts to contacts.json
-- [ ] Fix the CLI so that the "list" command works by listing all contacts and allowing you to select one, the prints out the selected contact
 ### API (async code)
 * location - `exercises/api`
 * commands
   * start the server - `node exercises/api/server.js`
 
-You'll be refacoring and fixing a simple static asset server. The server uses blocking sync code and crashes whenever a request comes in that is asking for an asset that is not found. Neither of those are desirable. You'll also have to teach the server how to server the assets it has in the `assets` folder.
-
-- [ ] install all remote modules (hint: use npm)
-- [ ] check the README on how to run your server
-- [ ] refactor the sync file reading code to be async with a callback, promise, or async await
-- [ ] prevent the server from crashing when an assets is not found. Instead, respond with a 404 status code
-- [ ] create some sort of router logic to handle incoming requests for assets
 ### Debugging & Testing
 * location - `exercises/testing`
 * commands
