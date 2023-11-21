@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-
+const Fawn = require('fawn');
 const {Rental , validate} =  require('../models/rentals');
 const { async } = require('jshint/src/prod-params');
 const { Movie } = require('../models/movies');
 const { Customer } = require('../models/customers');
+
+Fawn.init('mongodb://127.0.0.1:27017/vidly');
 
 
 router.get('/', async(req, res) => {
@@ -37,8 +39,15 @@ router.post('/', async(req, res) =>{
         }
     });
 
-    movie.numberInStock--;
-    rental = await rental.save();
+
+    new Fawn.Task()
+        .save('rentals', rental)
+        .update('movies', { _id : movie._id}, {
+            $inc : {numberInStock : -1} 
+        })
+        .run()
+        .then(() => console.log("Transaction Successful"))
+        .catch(err => console.error(err.message));
     res.send(rental);
 });
 
