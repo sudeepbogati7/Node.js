@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 
 
 // creating databse model passing schema 
-const Customer = mongoose.model('Customer', new mongoose.Schema({
+
+const customerSchema = new mongoose.Schema({
     name : {
         type: String, 
         minlength : 5, 
@@ -18,7 +19,8 @@ const Customer = mongoose.model('Customer', new mongoose.Schema({
         max : 11,
         required: true
     }
-}));
+});
+const Customer = mongoose.model('Customer', customerSchema );
 
 
 function validateCustomer(customer){
@@ -31,5 +33,7 @@ function validateCustomer(customer){
 
 }
 
+
+module.exports.customerSchema = customerSchema;
 module.exports.Customer = Customer;
 module.exports.validate = validateCustomer;
