@@ -1,6 +1,5 @@
 const express = require('express');
 const { async } = require('jshint/src/prod-params');
-const app = express();
 const mongoose = require('mongoose');
 const { validate , Movie} = require('../models/movies');
 const { Genre } = require('../models/genres');
