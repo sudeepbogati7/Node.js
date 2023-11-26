@@ -1,5 +1,4 @@
-const jwt = require('jsonwebtoken');
-const config = require('config');
+const auth = require('../middlewares/auth');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const _ = require('lodash');
@@ -10,7 +9,10 @@ const mongoose = require('mongoose');
 // custom modules 
 const { validate , User } = require('../models/users');
 
-
+router.get('/me', auth, async(req, res) => {
+    const user = await User.findById(req.user._id).select('-password');
+    res.send(user);
+});
 
 router.get('/', async(req, res) => {
     const user = await User.find().sort('username');
@@ -39,10 +41,12 @@ router.post('/', async(req, res) => {
     // res.send({
     //     username : newUser.username,
     //     email : newUser.email,
-    //     password : newUser.password
+    //     password : newUser.password 
     // });
 
-    const token = jwt.sign({_id : newUser._id}, config.get('myPrivateKey'));
+    // const token = jwt.sign({_id : newUser._id}, config.get('myPrivateKey')); // { _id : newUser._id } this is unconventional , there may be more than one parameters in the future , and it need to be handled by encapsulating 
+    const token = newUser.generateAuthToken();
+
 
     // Using lodash 
     // res.send(_.pick(newUser, [ 'email', 'password']));
@@ -51,4 +55,12 @@ router.post('/', async(req, res) => {
     //setting response header
     res.header('x-authentication-token', token).send(_.pick(newUser, ['email', 'password']));
 });
+
+router.get('/:id', async(req, res)=>{
+    const user = await User.findById(req.params.id);
+    if(!user) return res.send(404).send("No user found of that given ID ");
+
+    res.send(user);
+});
 module.exports = router;
+

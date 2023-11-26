@@ -22,7 +22,8 @@ router.post('/', async(req, res) =>{
     // res.send("login Sucess !");    
     // Using JSON Web Token 
 
-    const token = jwt.sign({_id : user._id}, config.get('myPrivateKey'));
+    // const token = jwt.sign({_id : user._id}, config.get('myPrivateKey'));
+    const token = user.generateAuthToken();
     res.send(token);
 
 });

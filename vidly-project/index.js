@@ -1,3 +1,6 @@
+const error = require('./middlewares/error');
+const winston = require('winston');
+require('winston-mongodb');
 let Joi = require('joi');
 Joi.objectId = require('joi-objectid');
 const config  = require('config');
@@ -12,6 +15,14 @@ const auth = require('./routes/auth');
 const express = require('express');
 const joiObjectid = require('joi-objectid');
 const app = express();
+
+
+
+winston.add(new winston.transports.File({ filename : 'logger.log'}));
+winston.add(new winston.transports.MongoDB({
+    db : 'mongodb://127.0.0.1:27017/vidly',
+    level : 'info'
+}));
 
 if(!config.get('myPrivateKey')){
     console.error("FATAL ERROR : The environment variable is not defined ! ");
@@ -30,6 +41,12 @@ app.use('/api/movies', movies);
 app.use('/api/rentals', rentals);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+
+app.use(error); //using error middleware at the last , do notice 
+
+
+
+
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
